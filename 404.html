@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Página no encontrada | Espero que me perdones</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <meta http-equiv="refresh" content="5; url=index.html">
+  <style>
+    .not-found-container {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .not-found-num {
+      font-family: var(--font-serif);
+      font-size: clamp(4rem, 15vw, 8rem);
+      color: var(--neon-fuchsia);
+      text-shadow: 0 0 25px var(--neon-fuchsia-glow);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .not-found-msg {
+      font-family: var(--font-cursive);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--dusty-rose);
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="hearts-canvas"></canvas>
+  <main class="not-found-container">
+    <div class="not-found-num">404</div>
+    <svg class="corazon-emblema-entrada" viewBox="0 0 100 100">
+      <path d="M50 24 C40 10 16 14 16 36 C16 60 50 82 50 82 C50 82 84 60 84 36 C84 14 60 10 50 24 Z" fill="var(--neon-fuchsia)"/>
+    </svg>
+    <p class="not-found-msg">
+      Este rincón no existe, pero mi carta para ti siempre te estará esperando.
+    </p>
+    <a href="index.html" class="btn-abrir" style="text-decoration: none;">
+      Volver a mi carta ♥
+    </a>
+  </main>
+  <script src="js/hearts.js"></script>
+</body>
+</html>

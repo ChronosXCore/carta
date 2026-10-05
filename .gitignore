@@ -1,0 +1,20 @@
+# Archivos del sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Backups y temporales
+*.backup
+*.bak
+*~
+data/*.backup
+data/*_backup.json
+
+# Herramientas locales y cachés
+__pycache__/
+*.py[cod]
+*$py.class
+tools/.venv/
+tools/env/
