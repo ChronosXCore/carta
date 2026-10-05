@@ -138,20 +138,28 @@
     const counterEl = document.getElementById('lightbox-counter');
     const contentCard = modal.querySelector('.lightbox-content-card');
 
-    const galleryItems = [
-      { type: 'image', src: 'assets/img/foto-12.jpg', caption: 'Nuestros secretos' },
-      { type: 'image', src: 'assets/img/foto-13.jpg', caption: 'Tarde tibia' },
-      { type: 'image', src: 'assets/img/foto-14.jpg', caption: 'Tu brillo' },
-      { type: 'image', src: 'assets/img/foto-15.jpg', caption: 'Lo que vivimos' },
-      { type: 'image', src: 'assets/img/foto-16.jpg', caption: 'Caminos cruzados' },
-      { type: 'image', src: 'assets/img/foto-17.jpg', caption: 'Un lazo imborrable' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.16.57 PM.mp4', caption: 'Aquel instante único' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.17.57 PM.mp4', caption: 'Tu risa que guardo' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.18.05 PM.mp4', caption: 'Tarde de alegría' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (1).mp4', caption: 'Cómplices de vida' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (2).mp4', caption: 'Lo que sentimos' },
-      { type: 'video', src: 'Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM.mp4', caption: 'Un pedacito nuestro' }
-    ];
+    // Construcción dinámica de la galería desde los elementos y pies de foto de index.html
+    const galleryElements = document.querySelectorAll('.polaroid-gallery-item');
+    const galleryItems = [];
+
+    galleryElements.forEach((el, index) => {
+      const isVideo = el.classList.contains('polaroid-video');
+      const mediaEl = isVideo ? el.querySelector('video') : el.querySelector('img');
+      const captionEl = el.querySelector('.scrapbook-caption');
+      let captionText = captionEl ? captionEl.textContent.replace(/▶/g, '').trim() : '';
+
+      let src = '';
+      if (mediaEl) {
+        src = mediaEl.getAttribute('src') || '';
+        if (isVideo) src = src.split('#')[0]; // remover #t=0.5 si existe
+      }
+
+      galleryItems.push({
+        type: isVideo ? 'video' : 'image',
+        src: src,
+        caption: captionText
+      });
+    });
 
     let currentIndex = 0;
     let isOpen = false;

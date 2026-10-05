@@ -465,15 +465,13 @@
     });
   }
 
-  // ---- IntersectionObserver (Solo para inicio inteligente, sin pausas agresivas) ----
+  // ---- IntersectionObserver (Gestión de visibilidad de interfaz sin reproducción automática forzada) ----
   function setupIO() {
     if (!seccionCarta || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // Al entrar en la carta por primera vez, intentamos reproducir suavemente
-        if (entry.isIntersecting && !hasAutoPlayedOnce && !manuallyPaused) {
-          hasAutoPlayedOnce = true;
-          playAudio();
+        if (entry.isIntersecting) {
+          updatePlayerVisibility();
         }
       });
     }, { threshold: [0.08] }).observe(seccionCarta);
