@@ -323,46 +323,70 @@
   window.addEventListener('wheel',     onUserScroll, { passive: true });
   window.addEventListener('touchmove', onUserScroll, { passive: true });
 
-  // ---- Control de Audio ----
+  // ---- Control de Audio Robusto ----
   function playAudio() {
-    if (!audioElement) return;
-    if (seccionCarta) {
-      const top = seccionCarta.getBoundingClientRect().top + window.pageYOffset;
-      if (window.pageYOffset < top - 140) window.scrollTo({ top: top - 15, behavior: 'smooth' });
+    if (!audioElement) {
+      console.error('[Audio Carta] Elemento #audio-carta no encontrado.');
+      return;
     }
+
     isUserInteractingWithScroll = false;
-    audioElement.play()
-      .then(() => {
-        isAudioPlaying     = true;
-        lastKnownAudioTime = audioElement.currentTime;
-        lastKnownPerfTime  = performance.now();
-        if (playIcon)    playIcon.style.display    = 'none';
-        if (pauseIcon)   pauseIcon.style.display   = 'block';
-        if (fallbackBtn) fallbackBtn.style.display = 'none';
-        cancelAnimationFrame(syncAnimationId);
-        syncAnimationId = requestAnimationFrame(syncLoop);
-        updatePlayerVisibility();
-      })
-      .catch(() => { if (fallbackBtn) fallbackBtn.style.display = 'inline-flex'; });
+
+    // Asegurar ruta correcta
+    if (!audioElement.src || audioElement.src === window.location.href) {
+      audioElement.src = 'assets/audio/carta.mp3';
+    }
+
+    const promise = audioElement.play();
+    if (promise !== undefined) {
+      promise
+        .then(() => {
+          isAudioPlaying = true;
+          manuallyPaused = false;
+          lastKnownAudioTime = audioElement.currentTime;
+          lastKnownPerfTime  = performance.now();
+          if (playIcon)    playIcon.style.display    = 'none';
+          if (pauseIcon)   pauseIcon.style.display   = 'block';
+          if (fallbackBtn) fallbackBtn.classList.add('audio-playing');
+          cancelAnimationFrame(syncAnimationId);
+          syncAnimationId = requestAnimationFrame(syncLoop);
+          updatePlayerVisibility();
+        })
+        .catch(err => {
+          console.warn('[Audio Carta] Error al reproducir (posible bloqueo de autoplay):', err);
+          isAudioPlaying = false;
+          if (playIcon)    playIcon.style.display    = 'block';
+          if (pauseIcon)   pauseIcon.style.display   = 'none';
+          if (fallbackBtn) fallbackBtn.style.display = 'inline-flex';
+        });
+    }
   }
 
   function pauseAudio() {
     if (!audioElement) return;
     audioElement.pause();
     isAudioPlaying = false;
-    if (playIcon)  playIcon.style.display  = 'block';
-    if (pauseIcon) pauseIcon.style.display = 'none';
+    if (playIcon)    playIcon.style.display    = 'block';
+    if (pauseIcon)   pauseIcon.style.display   = 'none';
+    if (fallbackBtn) fallbackBtn.classList.remove('audio-playing');
     cancelAnimationFrame(syncAnimationId);
     updatePlayerVisibility();
   }
 
-  function togglePlay() {
+  function togglePlay(e) {
+    if (e) e.preventDefault();
     if (!audioElement) return;
-    if (audioElement.paused) { manuallyPaused = false; playAudio(); }
-    else                     { manuallyPaused = true;  pauseAudio(); }
+    if (audioElement.paused) {
+      manuallyPaused = false;
+      playAudio();
+    } else {
+      manuallyPaused = true;
+      pauseAudio();
+    }
   }
 
-  function restartAudio() {
+  function restartAudio(e) {
+    if (e) e.preventDefault();
     if (!audioElement) return;
     audioElement.currentTime = 0;
     currentActiveIndex = currentSpokenUntil = -1;
@@ -403,50 +427,80 @@
   if (audioElement) {
     audioElement.addEventListener('ended', () => {
       isAudioPlaying = false;
-      if (playIcon)  playIcon.style.display  = 'block';
-      if (pauseIcon) pauseIcon.style.display = 'none';
+      if (playIcon)    playIcon.style.display  = 'block';
+      if (pauseIcon)   pauseIcon.style.display = 'none';
+      if (fallbackBtn) fallbackBtn.classList.remove('audio-playing');
       currentActiveIndex = -1;
       currentSpokenUntil = wordsFlat.length - 1;
       wordsFlat.forEach(w => { w.el.className = 'carta-palabra palabra-dicha'; });
       window.dispatchEvent(new CustomEvent('carta-finalizada'));
     });
     audioElement.addEventListener('loadedmetadata', () => {
-      if (timeTotal) timeTotal.textContent = formatTime(audioElement.duration);
+      if (timeTotal && audioElement.duration && !isNaN(audioElement.duration)) {
+        timeTotal.textContent = formatTime(audioElement.duration);
+      }
     });
-    audioElement.addEventListener('seeked',  () => { lastKnownAudioTime = audioElement.currentTime; lastKnownPerfTime = performance.now(); });
-    audioElement.addEventListener('playing', () => { isAudioPlaying = true;  lastKnownAudioTime = audioElement.currentTime; lastKnownPerfTime = performance.now(); });
-    audioElement.addEventListener('pause',   () => { isAudioPlaying = false; });
+    audioElement.addEventListener('canplay', () => {
+      if (timeTotal && audioElement.duration && !isNaN(audioElement.duration)) {
+        timeTotal.textContent = formatTime(audioElement.duration);
+      }
+    });
+    audioElement.addEventListener('play', () => {
+      isAudioPlaying = true;
+      if (playIcon)    playIcon.style.display  = 'none';
+      if (pauseIcon)   pauseIcon.style.display = 'block';
+      if (fallbackBtn) fallbackBtn.classList.add('audio-playing');
+      updatePlayerVisibility();
+    });
+    audioElement.addEventListener('pause', () => {
+      isAudioPlaying = false;
+      if (playIcon)    playIcon.style.display  = 'block';
+      if (pauseIcon)   pauseIcon.style.display = 'none';
+      if (fallbackBtn) fallbackBtn.classList.remove('audio-playing');
+      updatePlayerVisibility();
+    });
+    audioElement.addEventListener('seeked',  () => {
+      lastKnownAudioTime = audioElement.currentTime;
+      lastKnownPerfTime = performance.now();
+    });
   }
 
-  // ---- IntersectionObserver ----
+  // ---- IntersectionObserver (Solo para inicio inteligente, sin pausas agresivas) ----
   function setupIO() {
     if (!seccionCarta || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
-          if (!hasAutoPlayedOnce && !manuallyPaused) { hasAutoPlayedOnce = true; playAudio(); }
-          else if (!manuallyPaused && audioElement && audioElement.paused && audioElement.currentTime > 0) playAudio();
-        } else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) {
-          if (audioElement && !audioElement.paused) pauseAudio();
+        // Al entrar en la carta por primera vez, intentamos reproducir suavemente
+        if (entry.isIntersecting && !hasAutoPlayedOnce && !manuallyPaused) {
+          hasAutoPlayedOnce = true;
+          playAudio();
         }
       });
-    }, { threshold: [0.1, 0.45, 0.7] }).observe(seccionCarta);
+    }, { threshold: [0.08] }).observe(seccionCarta);
   }
 
   if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlay);
   if (restartBtn)   restartBtn.addEventListener('click', restartAudio);
-  if (fallbackBtn)  fallbackBtn.addEventListener('click', () => { manuallyPaused = false; playAudio(); });
+  if (fallbackBtn)  fallbackBtn.addEventListener('click', () => {
+    if (audioElement && !audioElement.paused) {
+      pauseAudio();
+    } else {
+      manuallyPaused = false;
+      playAudio();
+    }
+  });
 
   initCarta();
   setupProgressBar();
   setupIO();
   updatePlayerVisibility();
 
+  // Función de desbloqueo sin reset agresivo
   window.desbloquearAudioCarta = function () {
     if (!audioElement) return;
-    audioElement.load();
-    const p = audioElement.play();
-    if (p) p.then(() => { audioElement.pause(); audioElement.currentTime = 0; }).catch(() => {});
+    if (audioElement.readyState === 0) {
+      audioElement.load();
+    }
   };
 
   window.CartaPlayer = { play: playAudio, pause: pauseAudio, toggle: togglePlay, restart: restartAudio };

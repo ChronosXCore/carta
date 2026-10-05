@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#090717">
-  
+
   <!-- SEO & Open Graph Meta Tags -->
   <title>Para Yohandry — Espero que me perdones y que me entiendas</title>
-  <meta name="description" content="Una carta sincera para Yohandry, desde lo más profundo de mi corazón. Recuerdos, disculpas humildes y amor eterno.">
+  <meta name="description"
+    content="Una carta sincera para Yohandry, desde lo más profundo de mi corazón. Recuerdos, disculpas humildes y amor eterno.">
   <meta property="og:title" content="Espero que me perdones… y que me entiendas">
   <meta property="og:description" content="Una carta sincera desde lo más profundo de mi corazón.">
   <meta property="og:type" content="website">
@@ -20,11 +22,14 @@
   <!-- Tipografías de Google Fonts: Serif romántica, cursiva manuscrita y sans legible -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
 
   <!-- Hoja de estilos principal -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="bloquear-scroll" data-atmosfera="inicio">
 
   <!-- Canvas fijo de fondo con lluvia de corazones en cascada -->
@@ -37,16 +42,17 @@
   <svg width="0" height="0" class="svg-defs" aria-hidden="true" style="position: absolute;">
     <defs>
       <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
-        <path d="M 0.5, 0.2 C 0.4, -0.05 0, 0 0, 0.38 C 0, 0.72 0.5, 1 0.5, 1 C 0.5, 1 1, 0.72 1, 0.38 C 1, 0 0.6, -0.05 0.5, 0.2 Z"/>
+        <path
+          d="M 0.5, 0.2 C 0.4, -0.05 0, 0 0, 0.38 C 0, 0.72 0.5, 1 0.5, 1 C 0.5, 1 1, 0.72 1, 0.38 C 1, 0 0.6, -0.05 0.5, 0.2 Z" />
       </clipPath>
       <linearGradient id="degradado-esperanza" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ff2a85"/>
-        <stop offset="50%" stop-color="#d946ef"/>
-        <stop offset="100%" stop-color="#fbbf24"/>
+        <stop offset="0%" stop-color="#ff2a85" />
+        <stop offset="50%" stop-color="#d946ef" />
+        <stop offset="100%" stop-color="#fbbf24" />
       </linearGradient>
       <linearGradient id="degradado-neon" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#c026d3"/>
-        <stop offset="100%" stop-color="#ff2a85"/>
+        <stop offset="0%" stop-color="#c026d3" />
+        <stop offset="100%" stop-color="#ff2a85" />
       </linearGradient>
     </defs>
   </svg>
@@ -54,9 +60,11 @@
   <!-- =========================================================================
        1. PANTALLA DE ENTRADA (DESBLOQUEO DE AUDIO Y TRANSICIÓN CINEMATOGRÁFICA)
        ========================================================================= -->
-  <aside id="pantalla-entrada" class="pantalla-entrada" role="dialog" aria-modal="true" aria-label="Apertura de la carta">
+  <aside id="pantalla-entrada" class="pantalla-entrada" role="dialog" aria-modal="true"
+    aria-label="Apertura de la carta">
     <svg class="corazon-emblema-entrada" viewBox="0 0 100 100" aria-hidden="true">
-      <path d="M50 24 C40 10 16 14 16 36 C16 60 50 82 50 82 C50 82 84 60 84 36 C84 14 60 10 50 24 Z" fill="url(#degradado-neon)"/>
+      <path d="M50 24 C40 10 16 14 16 36 C16 60 50 82 50 82 C50 82 84 60 84 36 C84 14 60 10 50 24 Z"
+        fill="url(#degradado-neon)" />
     </svg>
     <h2 class="entrada-titulo">Para ti, Yohandry</h2>
     <p class="entrada-subtexto">
@@ -91,7 +99,7 @@
       </div>
 
       <svg class="portada-emblema-fondo" viewBox="0 0 100 100" fill="none" stroke-width="1.2" aria-hidden="true">
-        <path d="M50 24 C40 10 16 14 16 36 C16 60 50 82 50 82 C50 82 84 60 84 36 C84 14 60 10 50 24 Z"/>
+        <path d="M50 24 C40 10 16 14 16 36 C16 60 50 82 50 82 C50 82 84 60 84 36 C84 14 60 10 50 24 Z" />
       </svg>
 
       <h1 id="titulo-portada" class="titulo-principal">
@@ -116,7 +124,8 @@
       <button type="button" id="btn-scroll-down" class="indicador-scroll" aria-label="Deslizar hacia abajo">
         <span>Desliza para leer mi carta</span>
         <svg class="icono-scroll" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
       </button>
     </header>
@@ -125,7 +134,7 @@
          PLIEGO DE LA CARTA (ESTILO SCRAPBOOK Y STATIONERY ROMÁNTICA)
          ======================================================================= -->
     <main id="seccion-carta" class="carta-pergamino-scrapbook reveal-on-scroll" aria-label="Carta de amor y recuerdos">
-      
+
       <!-- Canvas de partículas sutiles debajo de las letras (corazones y corazones rotos con baja opacidad) -->
       <canvas id="carta-hearts-canvas" class="carta-hearts-canvas" aria-hidden="true"></canvas>
 
@@ -133,7 +142,7 @@
       <div style="text-align: center;">
         <button type="button" id="btn-fallback-audio" class="btn-fallback-audio">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
           </svg>
           <span>Escuchar mi carta narrada (activar sonido)</span>
         </button>
@@ -144,9 +153,11 @@
         <div class="scrapbook-saludo-area">
           <div class="scrapbook-wax-seal" title="Con amor">
             <svg viewBox="0 0 100 100" class="wax-seal-svg">
-              <circle cx="50" cy="50" r="44" fill="#a81b3f" filter="drop-shadow(0 3px 8px rgba(0,0,0,0.5))"/>
-              <circle cx="50" cy="50" r="38" fill="#881337" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="3,2"/>
-              <path d="M50 34 C44 24 28 26 28 40 C28 54 50 68 50 68 C50 68 72 54 72 40 C72 26 56 24 50 34 Z" fill="#fff1f2" opacity="0.95"/>
+              <circle cx="50" cy="50" r="44" fill="#a81b3f" filter="drop-shadow(0 3px 8px rgba(0,0,0,0.5))" />
+              <circle cx="50" cy="50" r="38" fill="#881337" stroke="#fb7185" stroke-width="1.2"
+                stroke-dasharray="3,2" />
+              <path d="M50 34 C44 24 28 26 28 40 C28 54 50 68 50 68 C50 68 72 54 72 40 C72 26 56 24 50 34 Z"
+                fill="#fff1f2" opacity="0.95" />
             </svg>
           </div>
           <div class="saludo-text-wrapper">
@@ -159,12 +170,15 @@
         <figure class="scrapbook-polaroid-taped" style="--rot: 4deg;">
           <div class="scrapbook-clip-container">
             <svg viewBox="0 0 24 60" class="scrapbook-clip-svg">
-              <path d="M12 4 C6 4 6 16 6 46 C6 54 10 57 14 57 C18 57 20 52 20 44 L20 18 C20 12 18 8 13 8 C8 8 8 13 8 20 L8 44 C8 48 9 50 12 50 C15 50 16 48 16 44 L16 22" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M12 4 C6 4 6 16 6 46 C6 54 10 57 14 57 C18 57 20 52 20 44 L20 18 C20 12 18 8 13 8 C8 8 8 13 8 20 L8 44 C8 48 9 50 12 50 C15 50 16 48 16 44 L16 22"
+                fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
           <div class="scrapbook-washi-tape" style="--tape-rot: -5deg;"></div>
           <div class="polaroid-img-frame">
-            <img src="assets/img/foto-01.jpg" alt="Aquel primer instante" width="300" height="400" loading="lazy" decoding="async">
+            <img src="assets/img/foto-01.jpg" alt="Año nuevo juntos" width="300" height="400" loading="lazy"
+              decoding="async">
           </div>
           <figcaption class="scrapbook-caption">Aquel primer instante ♥</figcaption>
         </figure>
@@ -182,7 +196,8 @@
             <img src="assets/img/foto-02.jpg" alt="Tu sonrisa" width="200" height="260" loading="lazy" decoding="async">
           </div>
           <div class="strip-item">
-            <img src="assets/img/foto-03.jpg" alt="Nuestra tarde" width="200" height="260" loading="lazy" decoding="async">
+            <img src="assets/img/foto-03.jpg" alt="Nuestra tarde" width="200" height="260" loading="lazy"
+              decoding="async">
           </div>
           <div class="strip-item">
             <img src="assets/img/foto-04.jpg" alt="Tu mirada" width="200" height="260" loading="lazy" decoding="async">
@@ -197,7 +212,8 @@
         <!-- ADORNO SCRAPBOOK 1: NOTA ADHESIVA CON LETRAS Y WASHI TAPE (LLENA ESPACIO) -->
         <div class="scrapbook-tape-note tape-note-cyan">
           <span class="scrapbook-washi-strip" style="--tape-rot: -2.5deg;"></span>
-          <p class="tape-note-quote">«Guardé cada instante contigo en un rincón de mi alma donde nada puede borrarlo»</p>
+          <p class="tape-note-quote">«Guardé cada instante contigo en un rincón de mi alma donde nada puede borrarlo»
+          </p>
           <span class="tape-note-stamp">11:11 ♥</span>
         </div>
 
@@ -205,7 +221,8 @@
         <figure class="scrapbook-heart-vignette float-right" title="Te amo">
           <div class="heart-frame-outer">
             <div class="heart-frame-inner">
-              <img src="assets/img/foto-05.jpg" alt="Abrazo que parecía eterno" width="350" height="350" loading="lazy" decoding="async">
+              <img src="assets/img/foto-05.jpg" alt="Abrazo que parecía eterno" width="350" height="350" loading="lazy"
+                decoding="async">
             </div>
           </div>
           <figcaption class="heart-caption-handwritten">te amo</figcaption>
@@ -232,17 +249,20 @@
         <!-- ELEMENTO 3: ROSA BOTÁNICA + MINI POLAROID FLOTADA A LA IZQUIERDA -->
         <aside class="scrapbook-rose-badge float-left">
           <svg viewBox="0 0 80 160" class="rose-svg" aria-hidden="true">
-            <path d="M40 70 Q42 110 38 150" stroke="#4ade80" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path d="M40 95 Q25 90 22 102 Q35 106 40 96" fill="#22c55e" stroke="#16a34a" stroke-width="1"/>
-            <path d="M39 115 Q55 110 58 122 Q45 126 39 116" fill="#22c55e" stroke="#16a34a" stroke-width="1"/>
-            <path d="M40 30 C30 18 18 25 24 42 C16 48 20 62 34 68 C46 68 56 58 56 46 C62 30 50 20 40 30 Z" fill="#f43f5e" stroke="#be123c" stroke-width="1.5"/>
-            <path d="M38 36 C34 28 26 32 30 42 C24 46 28 56 38 60 C46 58 50 50 48 42 C52 32 44 26 38 36 Z" fill="#fb7185"/>
-            <path d="M38 42 C36 38 32 40 34 46 C32 48 34 54 40 54 C44 52 46 48 44 44 Z" fill="#fff1f2"/>
+            <path d="M40 70 Q42 110 38 150" stroke="#4ade80" stroke-width="3" fill="none" stroke-linecap="round" />
+            <path d="M40 95 Q25 90 22 102 Q35 106 40 96" fill="#22c55e" stroke="#16a34a" stroke-width="1" />
+            <path d="M39 115 Q55 110 58 122 Q45 126 39 116" fill="#22c55e" stroke="#16a34a" stroke-width="1" />
+            <path d="M40 30 C30 18 18 25 24 42 C16 48 20 62 34 68 C46 68 56 58 56 46 C62 30 50 20 40 30 Z"
+              fill="#f43f5e" stroke="#be123c" stroke-width="1.5" />
+            <path d="M38 36 C34 28 26 32 30 42 C24 46 28 56 38 60 C46 58 50 50 48 42 C52 32 44 26 38 36 Z"
+              fill="#fb7185" />
+            <path d="M38 42 C36 38 32 40 34 46 C32 48 34 54 40 54 C44 52 46 48 44 44 Z" fill="#fff1f2" />
           </svg>
           <figure class="scrapbook-mini-polaroid" style="--rot: -4deg;">
             <div class="scrapbook-washi-tape" style="--tape-rot: 3deg;"></div>
             <div class="polaroid-img-frame">
-              <img src="assets/img/foto-07.jpg" alt="Tu compañía" width="220" height="280" loading="lazy" decoding="async">
+              <img src="assets/img/foto-07.jpg" alt="Tu compañía" width="220" height="280" loading="lazy"
+                decoding="async">
             </div>
             <figcaption class="scrapbook-caption">siempre en mí</figcaption>
           </figure>
@@ -255,7 +275,8 @@
         <!-- ADORNO SCRAPBOOK 3: NOTA CON WASHI TAPE ROSADO Y FRASE DE ARREPENTIMIENTO -->
         <div class="scrapbook-tape-note tape-note-rose">
           <span class="scrapbook-washi-strip" style="--tape-rot: 2.8deg;"></span>
-          <p class="tape-note-quote">«Duele reconocer los errores del pasado, pero mi arrepentimiento es sincero y mi amor por ti es real»</p>
+          <p class="tape-note-quote">«Duele reconocer los errores del pasado, pero mi arrepentimiento es sincero y mi
+            amor por ti es real»</p>
           <span class="tape-note-stamp">promesa de cambio ♥</span>
         </div>
 
@@ -263,7 +284,8 @@
         <figure class="scrapbook-mini-polaroid float-right" style="--rot: 4deg;">
           <div class="scrapbook-washi-tape" style="--tape-rot: -5deg;"></div>
           <div class="polaroid-img-frame">
-            <img src="assets/img/foto-06.jpg" alt="Un recuerdo sereno" width="260" height="200" loading="lazy" decoding="async">
+            <img src="assets/img/foto-06.jpg" alt="Un recuerdo sereno" width="260" height="200" loading="lazy"
+              decoding="async">
           </div>
           <figcaption class="scrapbook-caption">cambiar por amor</figcaption>
         </figure>
@@ -286,22 +308,26 @@
         <div class="scrapbook-fan-container" aria-label="Abanico de recuerdos">
           <figure class="fan-card fan-card-1" style="--rot: -9deg;" title="Momentos espontáneos">
             <div class="polaroid-img-frame">
-              <img src="assets/img/foto-08.jpg" alt="Momentos espontáneos" width="220" height="280" loading="lazy" decoding="async">
+              <img src="assets/img/foto-08.jpg" alt="Momentos espontáneos" width="220" height="280" loading="lazy"
+                decoding="async">
             </div>
           </figure>
           <figure class="fan-card fan-card-2" style="--rot: -3deg;" title="Risas compartidas">
             <div class="polaroid-img-frame">
-              <img src="assets/img/foto-09.jpg" alt="Risas compartidas" width="220" height="280" loading="lazy" decoding="async">
+              <img src="assets/img/foto-09.jpg" alt="Risas compartidas" width="220" height="280" loading="lazy"
+                decoding="async">
             </div>
           </figure>
           <figure class="fan-card fan-card-3" style="--rot: 4deg;" title="Nuestra aventura">
             <div class="polaroid-img-frame">
-              <img src="assets/img/foto-10.jpg" alt="Nuestra aventura" width="220" height="280" loading="lazy" decoding="async">
+              <img src="assets/img/foto-10.jpg" alt="Nuestra aventura" width="220" height="280" loading="lazy"
+                decoding="async">
             </div>
           </figure>
           <figure class="fan-card fan-card-4" style="--rot: 11deg;" title="La ternura de tus manos">
             <div class="polaroid-img-frame">
-              <img src="assets/img/foto-11.jpg" alt="La ternura de tus manos" width="220" height="280" loading="lazy" decoding="async">
+              <img src="assets/img/foto-11.jpg" alt="La ternura de tus manos" width="220" height="280" loading="lazy"
+                decoding="async">
             </div>
           </figure>
         </div>
@@ -309,16 +335,18 @@
         <!-- FIRMA MANUSCRITA Y DOODLE HEARTS (Inspiración 2 y 4) -->
         <div class="scrapbook-firma-block">
           <svg viewBox="0 0 50 50" class="scrapbook-doodle-heart doodle-left" aria-hidden="true">
-            <path d="M25 15 C20 6 8 8 8 20 C8 32 25 44 25 44 C25 44 42 32 42 20 C42 8 30 6 25 15 Z" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M25 15 C20 6 8 8 8 20 C8 32 25 44 25 44 C25 44 42 32 42 20 C42 8 30 6 25 15 Z" fill="none"
+              stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          
+
           <div class="firma-textos">
             <span class="despedida-linea">Con todo mi amor,</span>
             <span class="firma-linea">Te amo, por siempre tuyo ♥</span>
           </div>
 
           <svg viewBox="0 0 50 50" class="scrapbook-doodle-heart doodle-right" aria-hidden="true">
-            <path d="M25 15 C20 6 8 8 8 20 C8 32 25 44 25 44 C25 44 42 32 42 20 C42 8 30 6 25 15 Z" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M25 15 C20 6 8 8 8 20 C8 32 25 44 25 44 C25 44 42 32 42 20 C42 8 30 6 25 15 Z" fill="none"
+              stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
 
@@ -328,13 +356,14 @@
       <div class="scrapbook-envelope-box">
         <button type="button" id="btn-toggle-cofre" class="btn-open-envelope" aria-expanded="false">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            <path
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
           </svg>
           <span>Abrir nuestro sobre de recuerdos (fotos y videos especiales) ♥</span>
         </button>
 
         <div id="cofre-recuerdos-panel" class="cofre-panel" style="display: none;">
-          
+
           <!-- SECCIÓN DE FOTOGRAFÍAS -->
           <h4 class="cofre-seccion-titulo">
             <span>📷</span> Fotografías que guardo en el alma
@@ -342,42 +371,48 @@
           <div class="cofre-grid">
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="0" style="--rot: -2deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-12.jpg" alt="Nuestros secretos" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-12.jpg" alt="Nuestros secretos" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Nuestros secretos</figcaption>
             </figure>
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="1" style="--rot: 3deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-13.jpg" alt="Tarde tibia" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-13.jpg" alt="Tarde tibia" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Tarde tibia</figcaption>
             </figure>
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="2" style="--rot: -4deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-14.jpg" alt="Tu brillo" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-14.jpg" alt="Tu brillo" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Tu brillo</figcaption>
             </figure>
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="3" style="--rot: 2deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-15.jpg" alt="Lo que vivimos" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-15.jpg" alt="Lo que vivimos" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Lo que vivimos</figcaption>
             </figure>
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="4" style="--rot: -3deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-16.jpg" alt="Caminos cruzados" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-16.jpg" alt="Caminos cruzados" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Caminos cruzados</figcaption>
             </figure>
             <figure class="scrapbook-mini-polaroid polaroid-gallery-item" data-index="5" style="--rot: 4deg;">
               <div class="polaroid-img-frame">
-                <img src="assets/img/foto-17.jpg" alt="Un lazo imborrable" width="220" height="280" loading="lazy" decoding="async">
+                <img src="assets/img/foto-17.jpg" alt="Un lazo imborrable" width="220" height="280" loading="lazy"
+                  decoding="async">
                 <div class="polaroid-zoom-badge" aria-hidden="true"><span>🔍</span></div>
               </div>
               <figcaption class="scrapbook-caption">Un lazo imborrable</figcaption>
@@ -389,56 +424,80 @@
             <span>🎬</span> Nuestros videos y momentos grabados
           </h4>
           <div class="cofre-grid cofre-videos-grid">
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="6" style="--rot: -2.5deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="6"
+              style="--rot: -2.5deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.16.57 PM.mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.16.57 PM.mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Aquel instante único ▶</figcaption>
             </figure>
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="7" style="--rot: 3deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="7"
+              style="--rot: 3deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.17.57 PM.mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.17.57 PM.mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Tu risa que guardo ▶</figcaption>
             </figure>
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="8" style="--rot: -3.5deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="8"
+              style="--rot: -3.5deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.05 PM.mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.05 PM.mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Tarde de alegría ▶</figcaption>
             </figure>
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="9" style="--rot: 2.5deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="9"
+              style="--rot: 2.5deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (1).mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (1).mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Cómplices de vida ▶</figcaption>
             </figure>
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="10" style="--rot: -2deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="10"
+              style="--rot: -2deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (2).mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM (2).mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Lo que sentimos ▶</figcaption>
             </figure>
-            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="11" style="--rot: 3.5deg;">
+            <figure class="scrapbook-mini-polaroid polaroid-video polaroid-gallery-item" data-index="11"
+              style="--rot: 3.5deg;">
               <div class="polaroid-img-frame video-frame">
-                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM.mp4#t=0.5" preload="metadata" muted playsinline></video>
+                <video src="Videos/WhatsApp Video 2026-10-05 at 2.18.06 PM.mp4#t=0.5" preload="metadata" muted
+                  playsinline></video>
                 <div class="video-play-overlay" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
               </div>
               <figcaption class="scrapbook-caption">Un pedacito nuestro ▶</figcaption>
@@ -458,15 +517,23 @@
         <h3 class="season-card-title">Nuestra Segunda Temporada</h3>
 
         <blockquote class="season-main-quote">
-          «Quizás en el pasado no supimos hacer las cosas bien y nuestra historia no tuvo el final feliz que ambos soñábamos… pero las historias verdaderas no terminan donde hubo dolor: terminan donde renace el entendimiento.»
+          «Quizás en el pasado no supimos hacer las cosas bien y nuestra historia no tuvo el final feliz que ambos
+          soñábamos… pero las historias verdaderas no terminan donde hubo dolor: terminan donde renace el
+          entendimiento.»
         </blockquote>
 
         <div class="season-card-body">
           <p class="season-text">
-            Hoy no te busco para fingir que nada dolió, sino para agradecerte lo que fuiste, lo que eres y lo que aún significas en mi corazón. Los tropiezos me enseñaron a valorar cada segundo de tu sonrisa, cada silencio compartido y la paz inmensa que solo tú sabías transmitirme. Maduré, reconocí mis errores y comprendí que el amor sincero no consiste en no equivocarse jamás, sino en tener la humildad, el coraje y la nobleza de pedir perdón con toda el alma.
+            Hoy no te busco para fingir que nada dolió, sino para agradecerte lo que fuiste, lo que eres y lo que aún
+            significas en mi corazón. Los tropiezos me enseñaron a valorar cada segundo de tu sonrisa, cada silencio
+            compartido y la paz inmensa que solo tú sabías transmitirme. Maduré, reconocí mis errores y comprendí que el
+            amor sincero no consiste en no equivocarse jamás, sino en tener la humildad, el coraje y la nobleza de pedir
+            perdón con toda el alma.
           </p>
           <p class="season-text highlighted-season">
-            Aún nos queda tinta en las manos y latidos en el pecho. Si la vida nos vuelve a cruzar en el momento correcto, sé que todavía nos quedan páginas enteras para escribir <strong>una hermosa segunda temporada</strong>: más sabia, más sincera, sin miedos y con todo el amor que siempre guardé para ti.
+            Aún nos queda tinta en las manos y latidos en el pecho. Si la vida nos vuelve a cruzar en el momento
+            correcto, sé que todavía nos quedan páginas enteras para escribir <strong>una hermosa segunda
+              temporada</strong>: más sabia, más sincera, sin miedos y con todo el amor que siempre guardé para ti.
           </p>
         </div>
 
@@ -474,9 +541,11 @@
         <div class="season-card-footer">
           <div class="season-wax-stamp">
             <svg viewBox="0 0 100 100" class="wax-seal-svg">
-              <circle cx="50" cy="50" r="44" fill="#a81b3f" filter="drop-shadow(0 3px 8px rgba(0,0,0,0.5))"/>
-              <circle cx="50" cy="50" r="38" fill="#881337" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="3,2"/>
-              <path d="M50 34 C44 24 28 26 28 40 C28 54 50 68 50 68 C50 68 72 54 72 40 C72 26 56 24 50 34 Z" fill="#fff1f2" opacity="0.95"/>
+              <circle cx="50" cy="50" r="44" fill="#a81b3f" filter="drop-shadow(0 3px 8px rgba(0,0,0,0.5))" />
+              <circle cx="50" cy="50" r="38" fill="#881337" stroke="#fb7185" stroke-width="1.2"
+                stroke-dasharray="3,2" />
+              <path d="M50 34 C44 24 28 26 28 40 C28 54 50 68 50 68 C50 68 72 54 72 40 C72 26 56 24 50 34 Z"
+                fill="#fff1f2" opacity="0.95" />
             </svg>
           </div>
           <div class="season-signature-text">
@@ -495,8 +564,12 @@
        ========================================================================= -->
   <div class="carta-player-box" id="carta-player" role="region" aria-label="Reproductor de la carta narrada">
     <button type="button" id="btn-play-pause" class="player-btn" aria-label="Reproducir o pausar audio">
-      <svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      <svg id="icon-pause" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      <svg id="icon-play" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+      <svg id="icon-pause" viewBox="0 0 24 24" style="display: none;">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+      </svg>
     </button>
 
     <div class="player-timeline">
@@ -513,26 +586,38 @@
       </div>
     </div>
 
-    <button type="button" id="btn-restart" class="player-btn player-btn-secondary" aria-label="Reiniciar audio" title="Reiniciar">
-      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    <button type="button" id="btn-restart" class="player-btn player-btn-secondary" aria-label="Reiniciar audio"
+      title="Reiniciar">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+      </svg>
     </button>
   </div>
 
   <!-- =========================================================================
        MODAL LIGHTBOX VISOR DE RECUERDOS (FOTOS Y VIDEOS CON NAVEGACIÓN)
        ========================================================================= -->
-  <div id="modal-lightbox-recuerdos" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Visor de recuerdos" style="display: none;">
+  <div id="modal-lightbox-recuerdos" class="lightbox-modal" role="dialog" aria-modal="true"
+    aria-label="Visor de recuerdos" style="display: none;">
     <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
-    
+
     <div class="lightbox-container">
       <!-- Botón de Cerrar -->
-      <button type="button" id="lightbox-btn-close" class="lightbox-btn-close" aria-label="Cerrar visor" title="Cerrar (Esc)">
-        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      <button type="button" id="lightbox-btn-close" class="lightbox-btn-close" aria-label="Cerrar visor"
+        title="Cerrar (Esc)">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
       </button>
 
       <!-- Flecha Izquierda / Anterior -->
-      <button type="button" id="lightbox-btn-prev" class="lightbox-nav-btn lightbox-prev" aria-label="Recuerdo anterior" title="Anterior (Flecha izquierda)">
-        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <button type="button" id="lightbox-btn-prev" class="lightbox-nav-btn lightbox-prev" aria-label="Recuerdo anterior"
+        title="Anterior (Flecha izquierda)">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
       </button>
 
       <!-- Marco central de contenido (Polaroid expandida) -->
@@ -548,8 +633,11 @@
       </div>
 
       <!-- Flecha Derecha / Siguiente -->
-      <button type="button" id="lightbox-btn-next" class="lightbox-nav-btn lightbox-next" aria-label="Recuerdo siguiente" title="Siguiente (Flecha derecha)">
-        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      <button type="button" id="lightbox-btn-next" class="lightbox-nav-btn lightbox-next"
+        aria-label="Recuerdo siguiente" title="Siguiente (Flecha derecha)">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+        </svg>
       </button>
     </div>
   </div>
@@ -566,4 +654,5 @@
   <script src="js/letter.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>
