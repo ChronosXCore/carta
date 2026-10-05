@@ -2,54 +2,80 @@
  * Música de fondo — ZOE: Luna (Unplugged)
  *
  * Reglas de prioridad:
- *  1. La música comienza cuando el usuario hace clic en "Toca para abrir mi carta"
- *     (primer gesto de usuario = desbloqueo de autoplay en todos los navegadores).
- *  2. Se pausa automáticamente cuando:
- *     - La narración de la carta (#audio-carta) empieza a reproducirse.
- *     - Cualquier <video> de la galería empieza a reproducirse.
- *  3. Se reanuda automáticamente cuando:
- *     - La narración se pausa o termina Y ningún video está reproduciéndose.
- *     - El video se pausa o termina Y la narración no está reproduciéndose.
- *  4. El usuario puede silenciar/activar con el botón flotante #btn-bg-music.
- *  5. El volumen sube y baja con fade (300 ms) para que no se sienta abrupto.
+ *  1. La música empieza tras el primer clic del usuario ("Toca para abrir mi carta").
+ *  2. Se pausa con fade cuando suena la narración o algún video.
+ *  3. Reanuda automáticamente con fade en cuanto ningún otro audio/video esté activo.
+ *  4. El botón flotante ♪ permite silenciar/reactivar manualmente.
+ *
+ * Estrategia de detección:
+ *  - Escucha eventos (play/pause/ended) para reaccionar rápido.
+ *  - Además hace polling cada 800ms como red de seguridad para cubrir
+ *    casos donde los eventos no llegan (ej: lightbox que vacía el src del video).
  */
 
 (function () {
   'use strict';
 
   const BG_SRC   = 'mp3/ZOE- Luna (Unplugged).mp3';
-  const FADE_MS  = 300;
-  const VOL_FULL = 0.35; // Volumen de fondo (no debe pisar la narración)
+  const FADE_MS  = 400;
+  const VOL_FULL = 0.32;
+  const POLL_MS  = 800;
 
-  /* ---- Crear elemento <audio> de fondo ---- */
-  const bg = document.createElement('audio');
-  bg.id    = 'bg-music';
-  bg.src   = BG_SRC;
-  bg.loop  = true;
-  bg.volume = 0;
-  bg.preload = 'auto';
+  /* ---- Crear <audio> de fondo ---- */
+  const bg    = document.createElement('audio');
+  bg.id       = 'bg-music';
+  bg.src      = BG_SRC;
+  bg.loop     = true;
+  bg.volume   = 0;
+  bg.preload  = 'auto';
   document.body.appendChild(bg);
 
   /* ---- Estado ---- */
-  let bgUnlocked    = false; // El usuario ya hizo el primer gesto
-  let userMuted     = false; // El usuario decidió silenciar manualmente
-  let narrationPlaying = false;
-  let videoPlaying     = false;
-  let fadeTimer        = null;
+  let bgUnlocked = false;
+  let userMuted  = false;
+  let fadeTimer  = null;
+  let pollTimer  = null;
 
-  /* ---- Fade de volumen ---- */
+  /* ============================================================
+     UTILIDADES
+  ============================================================ */
+
+  /** ¿Está sonando realmente la narración? */
+  function isNarrationPlaying() {
+    const el = document.getElementById('audio-carta');
+    return el ? (!el.paused && !el.ended) : false;
+  }
+
+  /** ¿Está sonando algún <video> en el documento? */
+  function isVideoPlaying() {
+    const vids = document.querySelectorAll('video');
+    for (const v of vids) {
+      if (v.src && !v.paused && !v.ended && v.readyState > 1) return true;
+    }
+    return false;
+  }
+
+  /** ¿Debe sonar la música de fondo en este momento? */
+  function shouldMusicPlay() {
+    return bgUnlocked && !userMuted && !isNarrationPlaying() && !isVideoPlaying();
+  }
+
+  /* ============================================================
+     FADE DE VOLUMEN
+  ============================================================ */
+
   function fadeTo(targetVol, onDone) {
     if (fadeTimer) clearInterval(fadeTimer);
-    const steps   = 15;
-    const delay   = FADE_MS / steps;
-    const start   = bg.volume;
-    const delta   = (targetVol - start) / steps;
-    let step      = 0;
+    const STEPS = 16;
+    const delay = FADE_MS / STEPS;
+    const start = bg.volume;
+    const delta = (targetVol - start) / STEPS;
+    let step    = 0;
 
     fadeTimer = setInterval(() => {
       step++;
       bg.volume = Math.min(1, Math.max(0, start + delta * step));
-      if (step >= steps) {
+      if (step >= STEPS) {
         bg.volume = targetVol;
         clearInterval(fadeTimer);
         fadeTimer = null;
@@ -58,95 +84,82 @@
     }, delay);
   }
 
-  /* ---- Lógica central: ¿debe sonar la música ahora? ---- */
+  /* ============================================================
+     LÓGICA CENTRAL
+  ============================================================ */
+
   function evalMusic() {
-    if (!bgUnlocked || userMuted) return;
-
-    const shouldPlay = !narrationPlaying && !videoPlaying;
-
-    if (shouldPlay) {
+    if (shouldMusicPlay()) {
+      // Reanudar música
       if (bg.paused) {
-        bg.play().then(() => {
-          fadeTo(VOL_FULL);
-          updateBtnUI(true);
-        }).catch(() => {/* bloqueado por el navegador — normal en iOS hasta gesto */});
-      } else {
+        bg.play()
+          .then(() => { fadeTo(VOL_FULL); updateBtnUI(true); })
+          .catch(() => { /* bloqueado por navegador */ });
+      } else if (bg.volume < VOL_FULL) {
         fadeTo(VOL_FULL);
         updateBtnUI(true);
       }
     } else {
-      // Ceder ante narración o video
-      fadeTo(0, () => {
-        if (!bg.paused) bg.pause();
-        updateBtnUI(false);
-      });
+      // Ceder o silenciar
+      if (!bg.paused) {
+        fadeTo(0, () => { bg.pause(); updateBtnUI(false); });
+      }
     }
   }
 
-  /* ---- Escuchar la narración ---- */
+  /* ============================================================
+     POLLING — red de seguridad cada POLL_MS
+  ============================================================ */
+
+  function startPolling() {
+    if (pollTimer) return;
+    pollTimer = setInterval(evalMusic, POLL_MS);
+  }
+
+  /* ============================================================
+     HOOKS DE EVENTOS — reacción rápida
+  ============================================================ */
+
   function hookNarration() {
     const narr = document.getElementById('audio-carta');
     if (!narr) return;
-
-    narr.addEventListener('play', () => {
-      narrationPlaying = true;
-      evalMusic();
-    });
-    narr.addEventListener('pause', () => {
-      narrationPlaying = false;
-      evalMusic();
-    });
-    narr.addEventListener('ended', () => {
-      narrationPlaying = false;
-      evalMusic();
-    });
+    narr.addEventListener('play',  evalMusic);
+    narr.addEventListener('pause', () => setTimeout(evalMusic, 120));
+    narr.addEventListener('ended', () => setTimeout(evalMusic, 120));
   }
 
-  /* ---- Escuchar TODOS los videos (actuales y futuros) ---- */
   function hookVideos() {
-    // Delegar: capturar "play"/"pause"/"ended" en burbujeo desde document
+    // Captura en fase de captura (true) para pillar eventos en shadow/iframes
     document.addEventListener('play', e => {
-      if (e.target && e.target.tagName === 'VIDEO') {
-        videoPlaying = true;
-        evalMusic();
-      }
+      if (e.target && e.target.tagName === 'VIDEO') evalMusic();
     }, true);
 
     document.addEventListener('pause', e => {
       if (e.target && e.target.tagName === 'VIDEO') {
-        // Pequeño delay: el lightbox puede vaciar el src antes de que suene
-        setTimeout(() => {
-          videoPlaying = isAnyVideoPlaying();
-          evalMusic();
-        }, 80);
+        // Delay: el lightbox puede estar limpiando el src en este instante
+        setTimeout(evalMusic, 250);
       }
     }, true);
 
     document.addEventListener('ended', e => {
       if (e.target && e.target.tagName === 'VIDEO') {
-        videoPlaying = isAnyVideoPlaying();
-        evalMusic();
+        setTimeout(evalMusic, 250);
       }
     }, true);
   }
 
-  function isAnyVideoPlaying() {
-    const vids = document.querySelectorAll('video');
-    for (const v of vids) {
-      if (!v.paused && !v.ended) return true;
-    }
-    return false;
-  }
+  /* ============================================================
+     BOTÓN FLOTANTE ♪
+  ============================================================ */
 
-  /* ---- Botón flotante de control de música de fondo ---- */
   function createToggleButton() {
     const btn = document.createElement('button');
-    btn.id          = 'btn-bg-music';
-    btn.type        = 'button';
-    btn.title       = 'Música de fondo';
+    btn.id    = 'btn-bg-music';
+    btn.type  = 'button';
+    btn.title = 'Música de fondo';
     btn.setAttribute('aria-label', 'Activar o silenciar música de fondo');
-    btn.innerHTML   = `
-      <svg id="bg-icon-on" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+    btn.innerHTML = `
+      <svg id="bg-icon-on"  viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
         <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
       </svg>
       <svg id="bg-icon-off" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none;">
@@ -164,43 +177,41 @@
     });
 
     document.body.appendChild(btn);
-    return btn;
   }
 
-  function updateBtnUI(isPlaying) {
+  function updateBtnUI(playing) {
     const on  = document.getElementById('bg-icon-on');
     const off = document.getElementById('bg-icon-off');
     if (!on || !off) return;
-    if (isPlaying && !userMuted) {
-      on.style.display  = 'block';
-      off.style.display = 'none';
-    } else {
-      on.style.display  = 'none';
-      off.style.display = 'block';
-    }
+    const show = playing && !userMuted;
+    on.style.display  = show ? 'block' : 'none';
+    off.style.display = show ? 'none'  : 'block';
   }
 
-  /* ---- Desbloqueo en el primer gesto del usuario ---- */
+  /* ============================================================
+     DESBLOQUEO — primer gesto del usuario
+  ============================================================ */
+
   function unlockAndStart() {
     if (bgUnlocked) return;
     bgUnlocked = true;
 
-    bg.play().then(() => {
-      fadeTo(VOL_FULL);
-      updateBtnUI(true);
-    }).catch(() => {
-      // El navegador bloqueó incluso después del gesto (raro).
-      // Dejar silenciado; el botón flotante sirve como alternativa.
-    });
+    bg.play()
+      .then(() => { fadeTo(VOL_FULL); updateBtnUI(true); })
+      .catch(() => { /* bloqueado; el polling lo reintentará */ });
+
+    startPolling();
   }
 
-  /* ---- Arranque ---- */
+  /* ============================================================
+     ARRANQUE
+  ============================================================ */
+
   document.addEventListener('DOMContentLoaded', () => {
     createToggleButton();
     hookNarration();
     hookVideos();
 
-    // El botón "Toca para abrir mi carta" es el primer gesto confiable
     const btnAbrir = document.getElementById('btn-abrir-carta');
     if (btnAbrir) {
       btnAbrir.addEventListener('click', unlockAndStart, { once: true });
