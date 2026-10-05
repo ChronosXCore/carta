@@ -28,6 +28,34 @@
 
   <!-- Hoja de estilos principal -->
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Estilos del botón flotante de música de fondo -->
+  <style>
+    #btn-bg-music {
+      position: fixed;
+      bottom: 88px;            /* justo encima del reproductor de narración */
+      right: 18px;
+      z-index: 9000;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #1a0929 80%, #4a0e6e);
+      box-shadow: 0 0 0 2px rgba(212, 70, 239, 0.55), 0 4px 18px rgba(0,0,0,0.55);
+      color: #e879f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow 0.25s, transform 0.2s;
+    }
+    #btn-bg-music:hover {
+      transform: scale(1.13);
+      box-shadow: 0 0 0 3px rgba(212, 70, 239, 0.85), 0 6px 24px rgba(0,0,0,0.7);
+    }
+    #btn-bg-music:active { transform: scale(0.95); }
+    #btn-bg-music svg { pointer-events: none; display: block; }
+  </style>
 </head>
 
 <body class="bloquear-scroll" data-atmosfera="inicio">
@@ -653,6 +681,7 @@
   <script src="js/hearts.js"></script>
   <script src="js/letter.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/bg-music.js"></script>
 </body>
 
 </html>
