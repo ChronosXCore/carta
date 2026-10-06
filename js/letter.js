@@ -38,7 +38,31 @@
   let lastKnownPerfTime = 0;
   let isAudioPlaying = false;
 
-  // ---- Prediccion temporal sub-frame ultra-suave ----
+  // ---- Offset adaptativo: se auto-calibra midiendo el latency real del navegador ----
+  // Empieza en 180ms y se ajusta cada 3s según el desfase medido.
+  let OFFSET = 0.18;
+  let _offsetSamples = [];
+  let _lastOffsetCalib = 0;
+
+  function calibrateOffset() {
+    if (!audioElement || audioElement.paused || audioElement.ended) return;
+    const now      = performance.now();
+    const rawTime  = audioElement.currentTime;
+    const predicted = lastKnownAudioTime + (now - lastKnownPerfTime) / 1000;
+    const error     = predicted - rawTime;  // > 0 → predictor va adelante
+    if (Math.abs(error) < 0.6) {            // ignorar saltos grandes (seeks)
+      _offsetSamples.push(Math.max(0, error));
+      if (_offsetSamples.length > 8) _offsetSamples.shift();
+    }
+    if (_offsetSamples.length >= 4 && now - _lastOffsetCalib > 3000) {
+      _lastOffsetCalib = now;
+      const avg = _offsetSamples.reduce((a, b) => a + b, 0) / _offsetSamples.length;
+      // Mantener el offset entre 120ms y 320ms
+      OFFSET = Math.max(0.12, Math.min(0.32, avg + 0.05));
+    }
+  }
+
+  // ---- Predicción temporal sub-frame — resistente a jitter de red/CDN ----
   function getPredictedAudioTime() {
     if (!audioElement) return 0;
     const rawTime = audioElement.currentTime;
@@ -47,32 +71,40 @@
       lastKnownPerfTime  = performance.now();
       return rawTime;
     }
-    const now = performance.now();
+    const now      = performance.now();
     const rawDelta = rawTime - lastKnownAudioTime;
 
-    // Si el usuario saltó en la barra de progreso (seek) o hubo retroceso:
-    if (Math.abs(rawDelta) > 0.35 || rawDelta < -0.05) {
+    // Seek genuino del usuario (salto grande): reset limpio
+    if (rawDelta < -0.05 || rawDelta > 1.5) {
       lastKnownAudioTime = rawTime;
       lastKnownPerfTime  = now;
       return rawTime;
     }
 
-    // Re-anclaje al actualizarse el reloj del navegador (~cada 250ms)
+    // Jitter de red en CDN/Vercel (salto moderado 0.35-1.5s):
+    // En lugar de resetear, suavizamos con lerp para evitar parpadeo visual.
+    if (rawDelta > 0.35) {
+      // Interpolación suave: 60% hacia el nuevo valor real
+      lastKnownAudioTime = lastKnownAudioTime + rawDelta * 0.6;
+      lastKnownPerfTime  = now;
+      return lastKnownAudioTime;
+    }
+
+    // Re-anclaje normal al actualizarse el reloj del navegador (~cada 250ms)
     if (rawDelta > 0.02) {
       lastKnownAudioTime = rawTime;
       lastKnownPerfTime  = now;
+      calibrateOffset();  // ← calibrar offset con cada dato nuevo
       return rawTime;
     }
 
-    // Extrapolación de alta resolución entre eventos (~60-120fps fluidos)
+    // Extrapolación de alta resolución entre eventos (60-120fps)
     const elapsed      = (now - lastKnownPerfTime) / 1000;
     const playbackRate = audioElement.playbackRate || 1;
     const predicted    = lastKnownAudioTime + elapsed * playbackRate;
 
-    // Evitar que la predicción se adelante indebidamente
-    if (predicted - rawTime > 0.30) {
-      return rawTime;
-    }
+    // Evitar que la predicción se adelante más de 280ms
+    if (predicted - rawTime > 0.28) return rawTime;
     return Math.max(0, Math.min(predicted, audioElement.duration || Infinity));
   }
 
@@ -162,9 +194,8 @@
   }
 
   // ---- Sincronización Fluida y Estable ----
-  // Anticipación calibrada: 230ms de adelanto perceptivo para que el destello luminoso
-  // coincida con el ataque fonético de la voz y el ritmo natural de lectura visual.
-  const OFFSET = 0.23;
+  // OFFSET se calcula dinámicamente mediante calibrateOffset().
+  // Valor inicial 180ms; se ajusta entre 120ms y 320ms según el navegador/CDN.
 
   function getSync(t) {
     const playhead = t + OFFSET;
@@ -173,12 +204,17 @@
     const last = wordsFlat.length - 1;
     if (playhead >= wordsFlat[last].end) return { activeIndex: -1, spokenUntil: last };
 
-    // Búsqueda binaria instantánea O(log N)
+    // Búsqueda binaria O(log N)
     let lo = 0, hi = last, activeIdx = -1;
     while (lo <= hi) {
       const mid = (lo + hi) >> 1;
       const w   = wordsFlat[mid];
-      if (playhead >= w.start && playhead < w.end) {
+
+      // Duración visual mínima: palabras muy cortas (<120ms) se extienden
+      // para que el ojo las perciba antes de que desaparezcan.
+      const visEnd = Math.max(w.end, w.start + 0.12);
+
+      if (playhead >= w.start && playhead < visEnd) {
         activeIdx = mid;
         break;
       } else if (playhead < w.start) {
@@ -192,16 +228,15 @@
       return { activeIndex: activeIdx, spokenUntil: activeIdx - 1 };
     }
 
-    // Suavizado anti-parpadeo en pausas cortas entre palabras consecutivas:
-    // Mantiene la palabra previa encendida durante micro-silencios (< 0.40s)
-    // para que la lectura fluya como un destello continuo y no como un estroboscopio.
+    // Anti-parpadeo en pausas cortas entre palabras (<420ms de gap):
+    // mantiene la palabra previa encendida durante micro-silencios.
     if (hi >= 0 && hi < last) {
       const prevWord = wordsFlat[hi];
       const nextWord = wordsFlat[hi + 1];
-      const gap = nextWord.start - prevWord.end;
+      const gap             = nextWord.start - prevWord.end;
       const timeSincePrevEnd = playhead - prevWord.end;
 
-      if (timeSincePrevEnd < 0.24 && gap < 0.42) {
+      if (timeSincePrevEnd < 0.26 && gap < 0.45) {
         return { activeIndex: hi, spokenUntil: hi - 1 };
       }
     }
